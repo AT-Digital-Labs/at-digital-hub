@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/*
+ * Swiss Red design tokens. Contrast (WCAG 2.x), measured:
+ *   accent on paper 5.28:1 · accent on surface 4.84:1 · muted on paper 7.81:1 · ink on paper 18.88:1
+ *   accent-on-dark on ink 5.81:1 · muted-on-dark on ink 9.01:1 · field border on paper 4.74:1
+ * The base accent (#D90416) is too dim on near-black (3.58:1), so dark sections use --color-accent-on-dark.
+ */
+@theme {
+  --color-paper: #ffffff;
+  --color-surface: #f5f5f5;
+  --color-ink: #111111;
+  --color-muted: #525252;
+  --color-accent: #d90416;
+  --color-accent-strong: #b80312;
+  --color-accent-tint: #fdecee;
+  --color-line: #e5e5e5;
+  --color-field: #737373;
+  --color-accent-on-dark: #ff4d5a;
+  --color-muted-on-dark: #b3b3b3;
+  --color-line-on-dark: #333333;
+  --color-success: #0b6b3a;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif;
+
+  /* Fluid type scale — min/max clamp between ~360px and ~1440px viewports. */
+  --text-display: clamp(2.75rem, 1.95rem + 3.9vw, 5.75rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 800;
+
+  --text-h2: clamp(2.125rem, 1.5rem + 2.7vw, 4rem);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h2--font-weight: 800;
+
+  --text-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 700;
+
+  --text-lead: clamp(1.0625rem, 1.02rem + 0.22vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--font-weight: 600;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --header-h: 4rem;
+  --focus: var(--color-ink);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --header-h: 4.5rem;
+  }
+}
+
+html {
+  /* Sticky-header offset for every anchor jump, including keyboard and URL-hash navigation. */
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss03";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Belt and braces: decorative overflow is clipped per-section, but never allow sideways page scroll. */
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Dark surfaces flip the focus color so the indicator stays visible. */
+.on-dark {
+  --focus: #ffffff;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 64rem) {
+    padding-inline: 3rem;
+  }
+}
+
+@utility section-y {
+  padding-block: clamp(4rem, 3rem + 5vw, 8rem);
+}
+
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  font-weight: var(--text-eyebrow--font-weight);
+  text-transform: uppercase;
+}
+
+/* ── Motion ─────────────────────────────────────────────────────────────────────────────────────
+ * All motion is opt-in via prefers-reduced-motion: no-preference. Nothing starts hidden unless
+ * a CSS animation is actively running, so content stays visible if animation or JS fails.
+ */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .hero-in {
+    animation: hero-in 450ms var(--ease-out-quint) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+/* Display type must never clip: long words wrap instead of overflowing a narrow column. */
+.display-heading {
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
