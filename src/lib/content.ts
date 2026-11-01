@@ -1,5 +1,5 @@
 import type { ServiceValue } from "@/lib/contact/services";
-import { productFullName, siteConfig } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 
 /** Section anchors. Header, footer and CTAs all reference these ids. */
 export const sectionIds = {
@@ -73,12 +73,13 @@ export const services = {
 
 export type ModuleAvailability = "unspecified" | "planned" | "in-development" | "available";
 
-export interface ProductModule {
-  name: string;
+export interface ProductLine {
+  /** Suffix after the product family name, e.g. "HRIS" → "Unexoro HRIS". */
+  suffix: string;
   scope: string;
   /**
-   * Set per module once it has been confirmed. "unspecified" renders no status at all,
-   * so nothing implies a module is live or production-ready.
+   * Set per product once it has been confirmed. "unspecified" renders no status at all,
+   * so nothing implies a product is live or production-ready.
    */
   availability: ModuleAvailability;
 }
@@ -90,27 +91,29 @@ export const availabilityLabels: Record<Exclude<ModuleAvailability, "unspecified
 };
 
 export const product = {
-  badge: "In-house product",
+  badge: "In-house products",
   headingLead: "Built by us:",
-  description: "Our flagship business platform is designed to connect people, finance, and everyday operations.",
-  modulesLabel: "Product areas",
-  modulesNote: "Scope and availability of each area are confirmed during a product demo.",
-  modules: [
-    { name: "HRIS", scope: "Employee records and organization", availability: "unspecified" },
-    { name: "Payroll", scope: "Pay and compensation", availability: "unspecified" },
-    { name: "Finance", scope: "Financial records", availability: "unspecified" },
-    { name: "Operations", scope: "Everyday business processes", availability: "unspecified" },
-  ] satisfies ProductModule[],
+  headingName: `${siteConfig.product.name} products.`,
+  description: "Our in-house business products are designed to connect people, finance, and everyday operations.",
+  listLabel: "The product family",
+  listNote: "Scope and availability of each product are confirmed during a product demo.",
+  lines: [
+    { suffix: "HRIS", scope: "Employee records and organization", availability: "unspecified" },
+    { suffix: "POS", scope: "Point of sale and transactions", availability: "unspecified" },
+    { suffix: "Finance", scope: "Financial records", availability: "unspecified" },
+    { suffix: "Accounting", scope: "Books and accounting records", availability: "unspecified" },
+    { suffix: "Warehouse", scope: "Inventory and stock", availability: "unspecified" },
+  ] satisfies ProductLine[],
   workflow: {
     label: "Connected workflows",
-    copy: `${siteConfig.product.name} is designed around shared records, so information entered once can be used where it is needed instead of being re-entered across separate tools.`,
-    example: ["Employee record", "Payroll", "Finance"],
+    copy: `The ${siteConfig.product.name} products are designed around shared records, so information entered once can be used where it is needed instead of being re-entered across separate tools.`,
+    example: ["HRIS", "Finance", "Accounting"],
     exampleNote: "Example of the intended flow",
   },
   cta: "Request a Product Demo",
   exploreCta: `Explore ${siteConfig.product.name}`,
   previewCaption: "Illustrative concept · Sample data.",
-  previewAlt: `Illustrative ${productFullName} interface showing an employee list with sample data.`,
+  previewAlt: `Illustrative ${siteConfig.product.name} HRIS interface showing an employee list with sample data.`,
 } as const;
 
 export type ProcessIcon = "discover" | "design" | "develop" | "launch";
@@ -225,7 +228,10 @@ export const contact = {
 
 export const footerLinks = {
   services: services.items.map((service) => ({ label: service.title, href: `#${sectionIds.services}` })),
-  product: [{ label: productFullName, href: `#${sectionIds.product}` }],
+  product: product.lines.map((line) => ({
+    label: `${siteConfig.product.name} ${line.suffix}`,
+    href: `#${sectionIds.product}`,
+  })),
   company: [
     { label: "Our Process", href: `#${sectionIds.process}` },
     { label: "About Us", href: `#${sectionIds.about}` },

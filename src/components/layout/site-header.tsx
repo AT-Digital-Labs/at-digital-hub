@@ -99,8 +99,8 @@ export function SiteHeader() {
       )}
     >
       <div className="container-page flex h-(--header-h) items-center justify-between gap-6">
-        <a href="#top" aria-label="AT Digital Hub — back to top" className="-mx-1 shrink-0 px-1 py-2 whitespace-nowrap">
-          <Wordmark />
+        <a href="#top" aria-label="AT Digital Hub — back to top" className="-mx-1 shrink-0 px-1 py-2">
+          <Wordmark size="header" priority />
         </a>
 
         <nav aria-label="Primary" className="hidden md:block">

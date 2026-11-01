@@ -18,29 +18,32 @@ export function Product() {
           <Eyebrow>{product.badge}</Eyebrow>
           <h2 id="product-heading" className="display-heading mt-5 text-h2">
             <span className="block">{product.headingLead}</span>{" "}
-            <span className="block text-accent">
-              {siteConfig.product.name} {siteConfig.product.suffix}.
-            </span>
+            <span className="block text-accent">{product.headingName}</span>
           </h2>
           <p className="mt-6 max-w-lg text-lead text-muted">{product.description}</p>
 
-          <h3 className="mt-10 text-sm font-semibold">{product.modulesLabel}</h3>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {product.modules.map((module) => (
+          <h3 className="mt-10 text-sm font-semibold">{product.listLabel}</h3>
+          <ul className="mt-3 border-t border-ink">
+            {product.lines.map((line) => (
               <li
-                key={module.name}
-                className="inline-flex min-h-10 items-center gap-2 border border-ink bg-paper px-4 text-sm font-semibold"
+                key={line.suffix}
+                className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line bg-paper px-4 py-3"
               >
-                {module.name}
-                {module.availability !== "unspecified" ? (
-                  <span className="border-l border-line pl-2 text-xs font-medium text-muted">
-                    {availabilityLabels[module.availability]}
-                  </span>
-                ) : null}
+                <span className="text-[0.9375rem] font-bold">
+                  {siteConfig.product.name} <span className="text-accent">{line.suffix}</span>
+                </span>
+                <span className="text-sm text-muted">
+                  {line.scope}
+                  {line.availability !== "unspecified" ? (
+                    <span className="ml-2 border-l border-line pl-2 text-xs font-medium">
+                      {availabilityLabels[line.availability]}
+                    </span>
+                  ) : null}
+                </span>
               </li>
             ))}
           </ul>
-          <p className="mt-3 max-w-md text-sm text-muted">{product.modulesNote}</p>
+          <p className="mt-3 max-w-md text-sm text-muted">{product.listNote}</p>
 
           <div className="mt-10 border-t border-line pt-8">
             <h3 className="text-sm font-semibold">{workflow.label}</h3>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 256">
+  <g transform="translate(32, 32) scale(0.75)">
+    <path d="M16 208 L72 48 L96 48 L40 208 Z" fill="#111111"/>
+    <path d="M144 48 L168 48 L120 208 L96 208 Z" fill="#111111"/>
+    <path d="M72 48 L144 48 L144 72 L72 72 Z" fill="#111111"/>
+    <path d="M58 148 L126 148 L120 170 L52 170 Z" fill="#111111"/>
+    <path d="M180 48 L240 48 L240 72 L180 72 Z" fill="#111111"/>
+    <rect x="198" y="72" width="24" height="136" fill="#111111"/>
+    <circle cx="178" cy="196" r="12" fill="#111111"/>
+  </g>
+  <text x="248" y="152" font-family="Helvetica Neue, Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.5" fill="#111111">AT Digital Hub</text>
+</svg>

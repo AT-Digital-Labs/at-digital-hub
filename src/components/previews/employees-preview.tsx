@@ -1,7 +1,7 @@
 import { Bell, Check, Plus, Search, Users, Wallet } from "lucide-react";
 
 import { cn } from "@/lib/cn";
-import { productFullName } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 
 import { PreviewCard, PreviewSidebar, SAMPLE } from "./preview-parts";
 
@@ -27,7 +27,7 @@ export function EmployeesPreview({ className }: { className?: string }) {
   return (
     <div
       role="img"
-      aria-label={`Illustrative ${productFullName} interface showing a sample employee list and summary figures.`}
+      aria-label={`Illustrative ${siteConfig.product.name} HRIS interface showing a sample employee list and summary figures.`}
       className={cn("w-full", className)}
     >
       <div aria-hidden="true" className="@container overflow-hidden rounded-md border border-line bg-surface shadow-[0_24px_60px_-28px_rgb(17_17_17/0.35)]">

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 256">
+  <g transform="translate(32, 32) scale(0.75)">
+    <path d="M0 0 L256 0 L256 154 L166 154 L166 90 L0 90 Z" fill="#111111"/>
+    <path d="M0 102 L154 102 L154 166 L256 166 L256 256 L0 256 Z" fill="#525252"/>
+  </g>
+  <text x="248" y="152" font-family="Helvetica Neue, Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.5" fill="#111111">AT Digital Hub</text>
+</svg>

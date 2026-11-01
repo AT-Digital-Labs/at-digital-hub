@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Linked: two interlocking L-blocks forming a square via a 12-unit joint -->
+  <!-- Block A (upper/right L, dark) -->
+  <path d="M0 0 L256 0 L256 154 L166 154 L166 90 L0 90 Z" fill="#111111"/>
+  <!-- Block B (lower/left L, mid-grey) -->
+  <path d="M0 102 L154 102 L154 166 L256 166 L256 256 L0 256 Z" fill="#525252"/>
+</svg>

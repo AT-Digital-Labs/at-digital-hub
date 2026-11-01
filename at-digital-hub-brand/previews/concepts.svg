@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="984" viewBox="0 0 1600 984"><defs><filter id="grey"><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="1600" height="984" fill="#f7f7f4"/><text x="60" y="78" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="40" font-weight="700" fill="#161616">AT Digital Hub — logo concepts</text><text x="60" y="116" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" fill="#6b6b6b">Round 1 · greyscale · select a direction</text><rect x="60" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#161616" stroke-width="2"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <!-- Keystone: AT ligature where A's right leg = T's stem (shared stroke) -->
+  <rect width="256" height="256" fill="#111111"/>
+  <!-- A left leg (slanted parallelogram) -->
+  <path d="M28 200 L112 56 L140 56 L56 200 Z" fill="#FFFFFF"/>
+  <!-- Shared vertical stem: A's right leg AND T's stem -->
+  <rect x="140" y="56" width="24" height="144" fill="#FFFFFF"/>
+  <!-- A crossbar (slanted to match left leg's inner edge) -->
+  <path d="M97 130 L140 130 L140 150 L85 150 Z" fill="#FFFFFF"/>
+  <!-- T crossbar (right arm, grows from top of shared stem) -->
+  <rect x="164" y="56" width="64" height="24" fill="#FFFFFF"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 256" x="90" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <!-- Symbol -->
+  <g transform="translate(32, 32) scale(0.75)">
+    <rect width="256" height="256" fill="#111111"/>
+    <path d="M28 200 L112 56 L140 56 L56 200 Z" fill="#FFFFFF"/>
+    <rect x="140" y="56" width="24" height="144" fill="#FFFFFF"/>
+    <path d="M97 130 L140 130 L140 150 L85 150 Z" fill="#FFFFFF"/>
+    <rect x="164" y="56" width="64" height="24" fill="#FFFFFF"/>
+  </g>
+  <!-- Wordmark (concept-phase text; will be outlined in Phase 7) -->
+  <text x="248" y="152" font-family="Helvetica Neue, Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.5" fill="#111111">AT Digital Hub</text>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <!-- Keystone: AT ligature where A's right leg = T's stem (shared stroke) -->
+  <rect width="256" height="256" fill="#111111"/>
+  <!-- A left leg (slanted parallelogram) -->
+  <path d="M28 200 L112 56 L140 56 L56 200 Z" fill="#FFFFFF"/>
+  <!-- Shared vertical stem: A's right leg AND T's stem -->
+  <rect x="140" y="56" width="24" height="144" fill="#FFFFFF"/>
+  <!-- A crossbar (slanted to match left leg's inner edge) -->
+  <path d="M97 130 L140 130 L140 150 L85 150 Z" fill="#FFFFFF"/>
+  <!-- T crossbar (right arm, grows from top of shared stem) -->
+  <rect x="164" y="56" width="64" height="24" fill="#FFFFFF"/>
+</svg>
+</g><text x="122" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="180" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <!-- Keystone: AT ligature where A's right leg = T's stem (shared stroke) -->
+  <rect width="256" height="256" fill="#111111"/>
+  <!-- A left leg (slanted parallelogram) -->
+  <path d="M28 200 L112 56 L140 56 L56 200 Z" fill="#FFFFFF"/>
+  <!-- Shared vertical stem: A's right leg AND T's stem -->
+  <rect x="140" y="56" width="24" height="144" fill="#FFFFFF"/>
+  <!-- A crossbar (slanted to match left leg's inner edge) -->
+  <path d="M97 130 L140 130 L140 150 L85 150 Z" fill="#FFFFFF"/>
+  <!-- T crossbar (right arm, grows from top of shared stem) -->
+  <rect x="164" y="56" width="64" height="24" fill="#FFFFFF"/>
+</svg>
+</g><text x="196" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="238" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <!-- Keystone: AT ligature where A's right leg = T's stem (shared stroke) -->
+  <rect width="256" height="256" fill="#111111"/>
+  <!-- A left leg (slanted parallelogram) -->
+  <path d="M28 200 L112 56 L140 56 L56 200 Z" fill="#FFFFFF"/>
+  <!-- Shared vertical stem: A's right leg AND T's stem -->
+  <rect x="140" y="56" width="24" height="144" fill="#FFFFFF"/>
+  <!-- A crossbar (slanted to match left leg's inner edge) -->
+  <path d="M97 130 L140 130 L140 150 L85 150 Z" fill="#FFFFFF"/>
+  <!-- T crossbar (right arm, grows from top of shared stem) -->
+  <rect x="164" y="56" width="64" height="24" fill="#FFFFFF"/>
+</svg>
+</g><text x="246" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="90.0" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">A · Keystone</text><text x="90.0" y="808" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#161616" letter-spacing="1.5">RECOMMENDED</text><text x="90.0" y="842" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">AT ligature in a solid tile — the A&#x27;s right</text><text x="90.0" y="868" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">leg is the T&#x27;s stem (one shared stroke).</text><rect x="562.667" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <!-- Linked: two interlocking L-blocks forming a square via a 12-unit joint -->
+  <!-- Block A (upper/right L, dark) -->
+  <path d="M0 0 L256 0 L256 154 L166 154 L166 90 L0 90 Z" fill="#111111"/>
+  <!-- Block B (lower/left L, mid-grey) -->
+  <path d="M0 102 L154 102 L154 166 L256 166 L256 256 L0 256 Z" fill="#525252"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 256" x="592.667" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <g transform="translate(32, 32) scale(0.75)">
+    <path d="M0 0 L256 0 L256 154 L166 154 L166 90 L0 90 Z" fill="#111111"/>
+    <path d="M0 102 L154 102 L154 166 L256 166 L256 256 L0 256 Z" fill="#525252"/>
+  </g>
+  <text x="248" y="152" font-family="Helvetica Neue, Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.5" fill="#111111">AT Digital Hub</text>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <!-- Linked: two interlocking L-blocks forming a square via a 12-unit joint -->
+  <!-- Block A (upper/right L, dark) -->
+  <path d="M0 0 L256 0 L256 154 L166 154 L166 90 L0 90 Z" fill="#111111"/>
+  <!-- Block B (lower/left L, mid-grey) -->
+  <path d="M0 102 L154 102 L154 166 L256 166 L256 256 L0 256 Z" fill="#525252"/>
+</svg>
+</g><text x="624.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="682.667" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <!-- Linked: two interlocking L-blocks forming a square via a 12-unit joint -->
+  <!-- Block A (upper/right L, dark) -->
+  <path d="M0 0 L256 0 L256 154 L166 154 L166 90 L0 90 Z" fill="#111111"/>
+  <!-- Block B (lower/left L, mid-grey) -->
+  <path d="M0 102 L154 102 L154 166 L256 166 L256 256 L0 256 Z" fill="#525252"/>
+</svg>
+</g><text x="698.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="740.667" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <!-- Linked: two interlocking L-blocks forming a square via a 12-unit joint -->
+  <!-- Block A (upper/right L, dark) -->
+  <path d="M0 0 L256 0 L256 154 L166 154 L166 90 L0 90 Z" fill="#111111"/>
+  <!-- Block B (lower/left L, mid-grey) -->
+  <path d="M0 102 L154 102 L154 166 L256 166 L256 256 L0 256 Z" fill="#525252"/>
+</svg>
+</g><text x="748.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="592.6666666666667" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">B · Linked</text><text x="592.6666666666667" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Two interlocking blocks form a square —</text><text x="592.6666666666667" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">ideas joined into working systems.</text><text x="592.6666666666667" y="866" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Letter-neutral.</text><rect x="1065.33" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <!-- Signal: compact A with flat apex + T + precision dot. All straight edges snapped. -->
+  <!-- A left leg (parallelogram) — top (72,48) to (96,48); bottom (16,208) to (40,208) -->
+  <path d="M16 208 L72 48 L96 48 L40 208 Z" fill="#111111"/>
+  <!-- A right leg (parallelogram mirrored) — top (144,48) to (168,48); bottom (120,208) to (144,208) -->
+  <path d="M144 48 L168 48 L120 208 L96 208 Z" fill="#111111"/>
+  <!-- Flat apex of A -->
+  <path d="M72 48 L144 48 L144 72 L72 72 Z" fill="#111111"/>
+  <!-- A crossbar (horizontal, snapped) -->
+  <path d="M58 148 L126 148 L120 170 L52 170 Z" fill="#111111"/>
+  <!-- T crossbar -->
+  <path d="M180 48 L240 48 L240 72 L180 72 Z" fill="#111111"/>
+  <!-- T stem -->
+  <rect x="198" y="72" width="24" height="136" fill="#111111"/>
+  <!-- Precision dot — Hub marker, baseline-aligned -->
+  <circle cx="178" cy="196" r="12" fill="#111111"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 256" x="1095.33" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <g transform="translate(32, 32) scale(0.75)">
+    <path d="M16 208 L72 48 L96 48 L40 208 Z" fill="#111111"/>
+    <path d="M144 48 L168 48 L120 208 L96 208 Z" fill="#111111"/>
+    <path d="M72 48 L144 48 L144 72 L72 72 Z" fill="#111111"/>
+    <path d="M58 148 L126 148 L120 170 L52 170 Z" fill="#111111"/>
+    <path d="M180 48 L240 48 L240 72 L180 72 Z" fill="#111111"/>
+    <rect x="198" y="72" width="24" height="136" fill="#111111"/>
+    <circle cx="178" cy="196" r="12" fill="#111111"/>
+  </g>
+  <text x="248" y="152" font-family="Helvetica Neue, Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.5" fill="#111111">AT Digital Hub</text>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <!-- Signal: compact A with flat apex + T + precision dot. All straight edges snapped. -->
+  <!-- A left leg (parallelogram) — top (72,48) to (96,48); bottom (16,208) to (40,208) -->
+  <path d="M16 208 L72 48 L96 48 L40 208 Z" fill="#111111"/>
+  <!-- A right leg (parallelogram mirrored) — top (144,48) to (168,48); bottom (120,208) to (144,208) -->
+  <path d="M144 48 L168 48 L120 208 L96 208 Z" fill="#111111"/>
+  <!-- Flat apex of A -->
+  <path d="M72 48 L144 48 L144 72 L72 72 Z" fill="#111111"/>
+  <!-- A crossbar (horizontal, snapped) -->
+  <path d="M58 148 L126 148 L120 170 L52 170 Z" fill="#111111"/>
+  <!-- T crossbar -->
+  <path d="M180 48 L240 48 L240 72 L180 72 Z" fill="#111111"/>
+  <!-- T stem -->
+  <rect x="198" y="72" width="24" height="136" fill="#111111"/>
+  <!-- Precision dot — Hub marker, baseline-aligned -->
+  <circle cx="178" cy="196" r="12" fill="#111111"/>
+</svg>
+</g><text x="1127.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1185.33" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <!-- Signal: compact A with flat apex + T + precision dot. All straight edges snapped. -->
+  <!-- A left leg (parallelogram) — top (72,48) to (96,48); bottom (16,208) to (40,208) -->
+  <path d="M16 208 L72 48 L96 48 L40 208 Z" fill="#111111"/>
+  <!-- A right leg (parallelogram mirrored) — top (144,48) to (168,48); bottom (120,208) to (144,208) -->
+  <path d="M144 48 L168 48 L120 208 L96 208 Z" fill="#111111"/>
+  <!-- Flat apex of A -->
+  <path d="M72 48 L144 48 L144 72 L72 72 Z" fill="#111111"/>
+  <!-- A crossbar (horizontal, snapped) -->
+  <path d="M58 148 L126 148 L120 170 L52 170 Z" fill="#111111"/>
+  <!-- T crossbar -->
+  <path d="M180 48 L240 48 L240 72 L180 72 Z" fill="#111111"/>
+  <!-- T stem -->
+  <rect x="198" y="72" width="24" height="136" fill="#111111"/>
+  <!-- Precision dot — Hub marker, baseline-aligned -->
+  <circle cx="178" cy="196" r="12" fill="#111111"/>
+</svg>
+</g><text x="1201.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1243.33" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <!-- Signal: compact A with flat apex + T + precision dot. All straight edges snapped. -->
+  <!-- A left leg (parallelogram) — top (72,48) to (96,48); bottom (16,208) to (40,208) -->
+  <path d="M16 208 L72 48 L96 48 L40 208 Z" fill="#111111"/>
+  <!-- A right leg (parallelogram mirrored) — top (144,48) to (168,48); bottom (120,208) to (144,208) -->
+  <path d="M144 48 L168 48 L120 208 L96 208 Z" fill="#111111"/>
+  <!-- Flat apex of A -->
+  <path d="M72 48 L144 48 L144 72 L72 72 Z" fill="#111111"/>
+  <!-- A crossbar (horizontal, snapped) -->
+  <path d="M58 148 L126 148 L120 170 L52 170 Z" fill="#111111"/>
+  <!-- T crossbar -->
+  <path d="M180 48 L240 48 L240 72 L180 72 Z" fill="#111111"/>
+  <!-- T stem -->
+  <rect x="198" y="72" width="24" height="136" fill="#111111"/>
+  <!-- Precision dot — Hub marker, baseline-aligned -->
+  <circle cx="178" cy="196" r="12" fill="#111111"/>
+</svg>
+</g><text x="1251.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="1095.3333333333335" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">C · Signal</text><text x="1095.3333333333335" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Flat-apex A, engineered T, and a single red</text><text x="1095.3333333333335" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">precision dot — the Hub marker on the</text><text x="1095.3333333333335" y="866" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">baseline.</text></svg>

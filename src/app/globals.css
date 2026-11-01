@@ -52,14 +52,14 @@
 }
 
 :root {
-  --header-h: 4rem;
+  --header-h: 5rem;
   --focus: var(--color-ink);
 }
 
 @media (min-width: 48rem) {
   /* The header scales with the viewport instead of jumping between fixed sizes. */
   :root {
-    --header-h: clamp(4.5rem, 3.6rem + 1.4vw, 6rem);
+    --header-h: clamp(5.625rem, 4.5rem + 1.75vw, 7.5rem);
   }
 }
 

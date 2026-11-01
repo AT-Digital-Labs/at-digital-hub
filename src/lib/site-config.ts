@@ -42,25 +42,28 @@ const policies = presentLinks([
 
 export const siteConfig = {
   name: "AT Digital Hub",
-  /** Rendered as a red "AT" followed by the remainder in the wordmark. */
+  /** Text wordmark, used only where the logo image can't be (e.g. the generated social image). */
   wordmark: { accent: "AT", rest: " Digital Hub" },
+  /** Approved logo: trimmed from public/images/logo.png. `onDark` has white lettering for dark surfaces. */
+  logo: {
+    src: "/brand/logo.png",
+    onDarkSrc: "/brand/logo-on-dark.png",
+    width: 1629,
+    height: 569,
+  },
   tagline: "Practical software. Connected operations.",
   title: "AT Digital Hub | Software Development & AI Automation",
   description:
-    "AT Digital Hub builds websites, mobile apps, custom business applications, and AI automation in Cebu, Philippines. Discover our services and Unexoro ERP.",
+    "AT Digital Hub builds websites, mobile apps, custom business applications, and AI automation in Cebu, Philippines. Discover our services and the Unexoro business products.",
   location: { city: "Cebu", country: "Philippines", countryCode: "PH" },
   locale: "en_PH",
 
   product: {
     /** Change here to rename the product everywhere. */
     name: "Unexoro",
-    suffix: "ERP",
     /** Set only when a real product destination exists; no "Explore" link is rendered otherwise. */
     url: httpsUrl(process.env.NEXT_PUBLIC_UNEXORO_URL),
   },
-
-  /** Public path to an approved logo file. Leave undefined to use the text wordmark. */
-  logoPath: undefined as string | undefined,
 
   contact: {
     /** Public direct-contact address. Shown only when supplied. */
@@ -70,5 +73,3 @@ export const siteConfig = {
   social,
   policies,
 } as const;
-
-export const productFullName = `${siteConfig.product.name} ${siteConfig.product.suffix}`;

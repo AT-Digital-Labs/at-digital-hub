@@ -1,4 +1,5 @@
 import { Database, Settings, TrendingUp, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 
 import { SectionHeading } from "@/components/ui/section-heading";
 import { about, sectionIds, type PrincipleIcon } from "@/lib/content";
@@ -8,35 +9,6 @@ const icons: Record<PrincipleIcon, LucideIcon> = {
   connected: Database,
   growth: TrendingUp,
 };
-
-/** Abstract Swiss composition (no photography). Purely decorative. */
-function GeometricArt() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 400 300"
-      preserveAspectRatio="xMidYMid slice"
-      className="h-full w-full"
-      focusable="false"
-    >
-      <rect width="400" height="300" fill="#f5f5f5" />
-      <g stroke="#e5e5e5" strokeWidth="1">
-        {Array.from({ length: 19 }, (_, i) => (
-          <line key={i} x1={20 * (i + 1)} y1="0" x2={20 * (i + 1)} y2="300" />
-        ))}
-      </g>
-      <rect x="200" y="36" width="140" height="190" fill="#d90416" />
-      <rect x="60" y="110" width="190" height="190" fill="#111111" />
-      <g stroke="#333333" strokeWidth="2">
-        {Array.from({ length: 8 }, (_, i) => (
-          <line key={i} x1="60" y1={130 + i * 22} x2="250" y2={130 + i * 22} />
-        ))}
-      </g>
-      <rect x="250" y="170" width="110" height="130" fill="#c9c9c9" />
-      <rect x="250" y="170" width="110" height="6" fill="#111111" />
-    </svg>
-  );
-}
 
 export function About() {
   return (
@@ -52,8 +24,14 @@ export function About() {
             ))}
           </SectionHeading>
           <p className="reveal mt-6 max-w-2xl text-lead text-muted">{about.copy}</p>
-          <div className="reveal mt-10 aspect-[4/3] max-w-2xl overflow-hidden border border-line sm:aspect-[16/10]">
-            <GeometricArt />
+          <div className="reveal relative mt-10 aspect-[4/3] max-w-2xl overflow-hidden border border-line sm:aspect-[16/10]">
+            <Image
+              src="/images/collab.png"
+              alt="A desk with a monitor showing an interface design, a laptop with code open, and a notebook with a hand-drawn workflow diagram."
+              fill
+              sizes="(min-width: 1024px) 42rem, 100vw"
+              className="object-cover"
+            />
           </div>
         </div>
 

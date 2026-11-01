@@ -27,6 +27,13 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   applicationName: siteConfig.name,
   alternates: { canonical: "/" },
+  // Light/dark favicons, picked by the browser's colour scheme. Files live in /public.
+  icons: {
+    icon: [
+      { url: "/favicon-light.ico", media: "(prefers-color-scheme: light)", sizes: "any" },
+      { url: "/favicon-dark.ico", media: "(prefers-color-scheme: dark)", sizes: "any" },
+    ],
+  },
   // Only the intended production deployment may be indexed; previews and staging stay out of search.
   robots: indexable ? { index: true, follow: true } : { index: false, follow: false },
   openGraph: {

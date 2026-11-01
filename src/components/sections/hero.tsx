@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ButtonLink } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/section-heading";
 import { hero, product, sectionIds } from "@/lib/content";
-import { productFullName } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 import type { CSSProperties } from "react";
 
 const step = (index: number): CSSProperties => ({ "--i": index }) as CSSProperties;
@@ -49,15 +49,15 @@ export function Hero() {
     <section aria-labelledby="hero-heading" className="relative isolate -mt-(--header-h) flex min-h-svh items-center overflow-hidden">
       <HeroPattern />
 
-      <div className="container-page grid gap-14 pt-20 pb-32 sm:pt-28 lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-40 xl:py-48">
-        <div className="lg:col-span-5">
+      <div className="container-page grid gap-14 pt-[calc(var(--header-h)+2rem)] pb-32 sm:pt-[calc(var(--header-h)+3rem)] lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-40 xl:py-48">
+        <div className="lg:col-span-6">
           <div className="hero-in" style={step(0)}>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
           </div>
 
           <h1
             id="hero-heading"
-            className="hero-in display-heading mt-6 text-[clamp(2.75rem,1.75rem+3.2vw,5rem)] leading-[0.98] font-extrabold tracking-[-0.035em]"
+            className="hero-in display-heading relative z-10 mt-6 lg:w-[132%] lg:max-w-none text-[clamp(3rem,1.9rem+10.6vw,7rem)] leading-[0.95] lg:text-[clamp(4.5rem,-3.8rem+13.6vw,10rem)] font-extrabold tracking-[-0.035em]"
             style={step(1)}
           >
             <span className="block">{hero.headline.lead}</span> <span className="block text-accent">{hero.headline.highlight}</span>{" "}
@@ -78,10 +78,10 @@ export function Hero() {
           </div>
         </div>
 
-        <figure className="hero-in relative lg:col-span-7" style={step(4)}>
+        <figure className="hero-in relative lg:col-span-6" style={step(4)}>
           <Image
             src="/images/product.png"
-            alt={`${productFullName} on a laptop and a phone: a dashboard with employee, payroll and expense figures, and a mobile home screen. Illustrative sample data.`}
+            alt={`${siteConfig.product.name} business software on a laptop and a phone: a dashboard with employee, payroll and expense figures, and a mobile home screen. Illustrative sample data.`}
             width={1536}
             height={1024}
             priority

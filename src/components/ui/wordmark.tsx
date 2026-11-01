@@ -1,12 +1,33 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/cn";
 import { siteConfig } from "@/lib/site-config";
 
-/** Text wordmark. Replace with the approved logo asset when one exists (see `siteConfig.logoPath`). */
-export function Wordmark({ onDark = false, className }: { onDark?: boolean; className?: string }) {
+/** The approved AT Digital Hub logo. `onDark` swaps to the white-lettering variant for dark surfaces. */
+export function Wordmark({
+  onDark = false,
+  size = "default",
+  priority = false,
+}: {
+  onDark?: boolean;
+  /** "header" is 1.25x the default footer/inline size. */
+  size?: "default" | "header";
+  priority?: boolean;
+}) {
+  const { logo, name } = siteConfig;
+
   return (
-    <span className={cn("text-[clamp(1.25rem,1.05rem+0.5vw,1.75rem)] font-extrabold tracking-tight", onDark ? "text-white" : "text-ink", className)}>
-      <span className={onDark ? "text-accent-on-dark" : "text-accent"}>{siteConfig.wordmark.accent}</span>
-      {siteConfig.wordmark.rest}
-    </span>
+    <Image
+      src={onDark ? logo.onDarkSrc : logo.src}
+      alt={name}
+      width={logo.width}
+      height={logo.height}
+      priority={priority}
+      sizes="(min-width: 1024px) 14rem, 10rem"
+      className={cn(
+        "h-auto",
+        size === "header" ? "w-[clamp(9.375rem,7.75rem+1.75vw,13.75rem)]" : "w-[clamp(7.5rem,6.2rem+1.4vw,11rem)]",
+      )}
+    />
   );
 }

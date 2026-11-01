@@ -42,7 +42,7 @@ src/lib/
   contact/          schema (shared validation), delivery (server-only provider), inquiry (server logic), actions
 ```
 
-**Renaming the product:** change `siteConfig.product.name` in `src/lib/site-config.ts`; the UI, previews, metadata and form options all derive from it.
+**Renaming the product family:** change `siteConfig.product.name` in `src/lib/site-config.ts`; the UI, previews, metadata and form options all derive from it.
 
 **Module availability:** each product module in `src/lib/content.ts` has an `availability` field (`unspecified` | `planned` | `in-development` | `available`). `unspecified` shows no status, so nothing implies a module is live. Set real values once confirmed.
 
@@ -120,7 +120,7 @@ Custom domains attached to a *Preview* environment inherit this too. Optionally 
 
 | Item | Why it's needed |
 | --- | --- |
-| Approved logo / brand assets | The header uses a **text wordmark** and the favicon/Apple icon are an interim red "AT" monogram. Add the logo under `public/brand/`, set `siteConfig.logoPath`, and replace `src/app/icon.svg`/`apple-icon.tsx`. The social preview (`opengraph-image.tsx`) is generated from text and should be reviewed against the final brand. |
+| Logo-derived assets | The header, footer and Organization JSON-LD use the approved logo (`public/images/logo.png`, trimmed to `public/brand/logo.png` plus a white-lettering `logo-on-dark.png`). The favicons (`public/favicon-light.ico`, `favicon-dark.ico`) are the supplied files, served by colour scheme. The Apple touch icon is still an interim red "AT" monogram and the social preview (`opengraph-image.tsx`) is generated from text. Replace both with logo-based versions. If the logo changes, regenerate the two files in `public/brand/`. |
 | Real Unexoro screenshots | All product visuals are **illustrative HTML/CSS with sample data**, labelled "Illustrative concept · Sample data." Swap in real, approved screenshots (use `next/image` with set dimensions) and drop the label when they are real. |
 | Production domain | Required as `NEXT_PUBLIC_SITE_URL`. |
 | Email delivery details | Verified sending domain, Resend API key, destination inbox. |
