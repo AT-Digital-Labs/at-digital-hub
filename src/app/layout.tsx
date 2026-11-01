@@ -53,7 +53,8 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" className={inter.variable} data-scroll-behavior="smooth">
-      <body>
+      {/* Browser extensions often inject attributes on <body> before hydration; this only ignores that, not child mismatches. */}
+      <body suppressHydrationWarning>
         {/* Without JavaScript the mobile menu can't be toggled, so show its links instead of hiding navigation. */}
         <noscript>
           <style>{`@media (max-width: 47.99rem) { .mobile-menu { display: block; } }`}</style>

@@ -57,8 +57,9 @@
 }
 
 @media (min-width: 48rem) {
+  /* The header scales with the viewport instead of jumping between fixed sizes. */
   :root {
-    --header-h: 4.5rem;
+    --header-h: clamp(4.5rem, 3.6rem + 1.4vw, 6rem);
   }
 }
 
@@ -80,6 +81,28 @@ body {
   overflow-x: clip;
 }
 
+/* Scrollbar: thin, on-brand. Standard properties for Firefox/Chrome 121+, WebKit fallback for the rest. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-surface);
+}
+
+::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border: 3px solid var(--color-surface);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-strong);
+}
+
 ::selection {
   background: var(--color-accent);
   color: #fff;
@@ -97,17 +120,9 @@ body {
 }
 
 @utility container-page {
+  /* Full width: content spans the viewport, with gutters that grow fluidly instead of a max-width cap. */
   width: 100%;
-  max-width: 80rem;
-  margin-inline: auto;
-  padding-inline: 1.25rem;
-
-  @media (min-width: 40rem) {
-    padding-inline: 2rem;
-  }
-  @media (min-width: 64rem) {
-    padding-inline: 3rem;
-  }
+  padding-inline: clamp(1.25rem, 0.5rem + 3.6vw, 6rem);
 }
 
 @utility section-y {

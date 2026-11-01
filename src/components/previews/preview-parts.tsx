@@ -51,7 +51,7 @@ export function PreviewSidebar({ active, className }: { active: string; classNam
           key={label}
           className={cn(
             "flex items-center gap-2 rounded-sm px-2 py-1.5 text-xs font-medium",
-            label === active ? "bg-accent-tint text-accent" : "text-muted",
+            label === active ? "bg-accent text-white" : "text-muted",
           )}
         >
           <Icon aria-hidden="true" className="size-3.5 shrink-0" />

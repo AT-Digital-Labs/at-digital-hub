@@ -1,22 +1,55 @@
-import { DashboardPreview } from "@/components/previews/dashboard-preview";
-import { PhonePreview } from "@/components/previews/phone-preview";
+import Image from "next/image";
+
 import { ButtonLink } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/section-heading";
 import { hero, product, sectionIds } from "@/lib/content";
+import { productFullName } from "@/lib/site-config";
 import type { CSSProperties } from "react";
 
 const step = (index: number): CSSProperties => ({ "--i": index }) as CSSProperties;
 
+/**
+ * Swiss line pattern behind the product visual: hairline diagonals, an outlined red band and a solid red block.
+ * All shapes share one slope (66 units across per 100 up) so they read as a single system. Decorative only.
+ */
+function HeroPattern() {
+  const SLOPE = 0.66;
+  const lines = Array.from({ length: 9 }, (_, i) => {
+    const x = -240 + i * 120;
+    return { x1: x, x2: x + 1000 * SLOPE, key: i };
+  });
+
+  return (
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 1000 1000"
+      preserveAspectRatio="xMaxYMid slice"
+      className="pointer-events-none absolute inset-y-0 right-0 -z-10 h-full w-full [mask-image:linear-gradient(to_right,transparent,#000_30%)] max-lg:top-auto max-lg:h-[48%] max-lg:[mask-image:none] lg:w-[62%]"
+    >
+      <g stroke="#d4d4d4" strokeWidth="1.25" vectorEffect="non-scaling-stroke">
+        {lines.map(({ x1, x2, key }) => (
+          <line key={key} x1={x1} y1="1000" x2={x2} y2="0" vectorEffect="non-scaling-stroke" />
+        ))}
+      </g>
+      <polygon
+        points="560,200 720,200 192,1000 32,1000"
+        fill="none"
+        stroke="#d90416"
+        strokeWidth="2"
+        vectorEffect="non-scaling-stroke"
+      />
+      <polygon points="720,600 1010,600 880,800 590,800" fill="#d90416" />
+    </svg>
+  );
+}
+
 export function Hero() {
   return (
-    <section aria-labelledby="hero-heading" className="relative isolate overflow-hidden">
-      {/* Geometric red field, inspired by the Swiss reference. Decorative only. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-y-0 right-0 -z-10 hidden w-[46%] bg-accent [clip-path:polygon(24%_0,100%_0,100%_100%,0_100%)] lg:block"
-      />
+    <section aria-labelledby="hero-heading" className="relative isolate -mt-(--header-h) flex min-h-svh items-center overflow-hidden">
+      <HeroPattern />
 
-      <div className="container-page grid gap-14 pt-10 pb-16 sm:pt-14 lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-20 xl:py-24">
+      <div className="container-page grid gap-14 pt-20 pb-32 sm:pt-28 lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-40 xl:py-48">
         <div className="lg:col-span-5">
           <div className="hero-in" style={step(0)}>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
@@ -27,7 +60,8 @@ export function Hero() {
             className="hero-in display-heading mt-6 text-[clamp(2.75rem,1.75rem+3.2vw,5rem)] leading-[0.98] font-extrabold tracking-[-0.035em]"
             style={step(1)}
           >
-            <span className="block">{hero.headline.lead}</span> <span className="block text-accent">{hero.headline.highlight} {hero.headline.tail}</span>
+            <span className="block">{hero.headline.lead}</span> <span className="block text-accent">{hero.headline.highlight}</span>{" "}
+            <span className="block">{hero.headline.tail}</span>
           </h1>
 
           <p className="hero-in mt-6 max-w-md text-lead text-muted" style={step(2)}>
@@ -45,19 +79,17 @@ export function Hero() {
         </div>
 
         <figure className="hero-in relative lg:col-span-7" style={step(4)}>
-          {/* Mobile/tablet: a red block anchors the devices; at lg the full-height field above takes over. */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-y-[18%] right-[-1.25rem] left-[22%] -z-10 bg-accent sm:right-[-2rem] lg:hidden"
+          <Image
+            src="/images/product.png"
+            alt={`${productFullName} on a laptop and a phone: a dashboard with employee, payroll and expense figures, and a mobile home screen. Illustrative sample data.`}
+            width={1536}
+            height={1024}
+            priority
+            sizes="(min-width: 1024px) 58vw, 100vw"
+            className="relative -mx-[6%] h-auto w-[112%] max-w-none"
           />
 
-          <div className="relative pb-48 sm:pb-12">
-            {/* Narrow screens: the phone overlaps only the laptop's lower edge so no content is covered. */}
-            <DashboardPreview sidebar={false} className="sm:ml-auto sm:w-[84%]" />
-            <PhonePreview className="absolute bottom-0 left-0 w-[32%] min-w-[7.25rem] max-w-[11.5rem] sm:w-[30%]" />
-          </div>
-
-          <figcaption className="mt-4 inline-block bg-paper px-2 py-1 text-xs text-muted">{product.previewCaption}</figcaption>
+          <figcaption className="mt-4 ml-auto block w-fit bg-paper px-2 py-1 text-xs text-muted">{product.previewCaption}</figcaption>
         </figure>
       </div>
     </section>

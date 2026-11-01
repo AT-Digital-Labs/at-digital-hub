@@ -14,6 +14,7 @@ const DESKTOP_QUERY = "(min-width: 48rem)";
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
@@ -24,6 +25,26 @@ export function SiteHeader() {
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  // Highlight the nav item whose section crosses the middle of the viewport. Clears above the first section.
+  useEffect(() => {
+    const ids = navLinks.map((link) => link.href.slice(1));
+    const sections = ids.flatMap((id) => {
+      const element = document.getElementById(id);
+      return element ? [element] : [];
+    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+          else setActiveId((current) => (current === entry.target.id ? null : current));
+        }
+      },
+      { rootMargin: "-45% 0px -54% 0px" },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
   const closeMenu = useCallback((returnFocus: boolean) => {
@@ -72,8 +93,9 @@ export function SiteHeader() {
       ref={headerRef}
       data-scrolled={scrolled}
       className={cn(
-        "sticky top-0 z-50 border-b bg-paper transition-[border-color,box-shadow] duration-300 motion-reduce:transition-none",
-        scrolled ? "border-line shadow-[0_1px_0_0_rgb(17_17_17/0.04)]" : "border-transparent",
+        "sticky top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300 motion-reduce:transition-none",
+        // Transparent at the top of the page; once scrolled, a solid white background.
+        scrolled ? "border-line bg-paper" : "border-transparent bg-transparent",
       )}
     >
       <div className="container-page flex h-(--header-h) items-center justify-between gap-6">
@@ -87,12 +109,19 @@ export function SiteHeader() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="group relative inline-flex min-h-11 items-center px-3 text-[0.9375rem] font-medium text-ink"
+                  aria-current={activeId === link.href.slice(1) ? "location" : undefined}
+                  className={cn(
+                    "group relative inline-flex min-h-11 items-center px-3 text-[clamp(0.9375rem,0.85rem+0.22vw,1.125rem)] font-medium transition-colors duration-200 motion-reduce:transition-none",
+                    activeId === link.href.slice(1) ? "text-accent" : "text-ink",
+                  )}
                 >
                   {link.label}
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-3 bottom-2 h-0.5 origin-left scale-x-0 bg-accent motion-safe:transition-transform motion-safe:duration-200 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                    className={cn(
+                      "absolute inset-x-3 bottom-2 h-0.5 origin-left bg-accent motion-safe:transition-transform motion-safe:duration-200 group-hover:scale-x-100 group-focus-visible:scale-x-100",
+                      activeId === link.href.slice(1) ? "scale-x-100" : "scale-x-0",
+                    )}
                   />
                 </a>
               </li>
@@ -133,7 +162,11 @@ export function SiteHeader() {
                 <a
                   ref={index === 0 ? firstLinkRef : undefined}
                   href={link.href}
-                  className="flex min-h-14 items-center justify-between text-lg font-semibold"
+                  aria-current={activeId === link.href.slice(1) ? "location" : undefined}
+                  className={cn(
+                    "flex min-h-14 items-center justify-between text-lg font-semibold",
+                    activeId === link.href.slice(1) && "text-accent",
+                  )}
                   onClick={() => closeMenu(false)}
                 >
                   {link.label}
