@@ -15,3 +15,6 @@ export const initialContactState: ContactState = { status: "idle", fieldErrors: 
 
 /** Minimum time between starting to fill the form and submitting it. Lightweight bot friction only. */
 export const MIN_FILL_MS = 3000;
+
+/** Form field the CAPTCHA widget writes its token into (Turnstile's default name). */
+export const CAPTCHA_FIELD = "cf-turnstile-response";

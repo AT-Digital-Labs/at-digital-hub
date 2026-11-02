@@ -4,20 +4,25 @@ import { randomUUID } from "node:crypto";
 
 import { siteConfig } from "@/lib/site-config";
 
+import { getCaptchaConfig, verifyCaptcha, type CaptchaConfig, type CaptchaResult } from "./captcha";
 import { getDeliveryConfig, sendInquiry, type DeliveryConfig, type DeliveryResult, type Inquiry } from "./delivery";
 import { validateContact } from "./schema";
-import { MIN_FILL_MS, type ContactState } from "./types";
+import { CAPTCHA_FIELD, MIN_FILL_MS, type ContactState } from "./types";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export interface InquiryDeps {
   getConfig: () => DeliveryConfig | undefined;
   send: (config: DeliveryConfig, inquiry: Inquiry, idempotencyKey: string) => Promise<DeliveryResult>;
+  getCaptcha: () => CaptchaConfig | undefined;
+  verify: (config: CaptchaConfig, token: FormDataEntryValue | null) => Promise<CaptchaResult>;
 }
 
 const defaultDeps: InquiryDeps = {
   getConfig: () => getDeliveryConfig(),
   send: (config, inquiry, key) => sendInquiry(config, inquiry, key),
+  getCaptcha: () => getCaptchaConfig(),
+  verify: (config, token) => verifyCaptcha(config, token),
 };
 
 function directContactHint(): string {
@@ -36,8 +41,8 @@ export function unavailableState(): ContactState {
 
 /**
  * Handles one submission. Nothing here is rate limiting: the honeypot and minimum fill time only
- * filter naive automated posts, and the idempotency key stops accidental double delivery.
- * User input is never logged.
+ * filter naive automated posts, the CAPTCHA (when configured) stops scripted ones, and the
+ * idempotency key stops accidental double delivery. User input is never logged.
  */
 export async function processInquiry(formData: FormData, deps: InquiryDeps = defaultDeps): Promise<ContactState> {
   const config = deps.getConfig();
@@ -70,6 +75,24 @@ export async function processInquiry(formData: FormData, deps: InquiryDeps = def
       fieldErrors: validation.errors,
       values: validation.values,
     };
+  }
+
+  // Checked only once the input is valid, so a token isn't spent on a submission we'd reject anyway.
+  const captcha = deps.getCaptcha();
+  if (captcha) {
+    const check = await deps.verify(captcha, formData.get(CAPTCHA_FIELD));
+    if (!check.ok) {
+      if (check.reason !== "missing") console.error("[contact] captcha failed", { reason: check.reason, status: check.status });
+      return {
+        status: "error",
+        message:
+          check.reason === "unreachable"
+            ? "We couldn't confirm you're human just now. Please try again in a moment."
+            : "Please complete the verification check and send again.",
+        fieldErrors: {},
+        values: validation.data,
+      };
+    }
   }
 
   const submittedKey = formData.get("submissionId");

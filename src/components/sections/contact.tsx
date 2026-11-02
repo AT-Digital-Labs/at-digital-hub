@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site-config";
 
 import { ContactForm } from "./contact-form";
 
-export function Contact({ deliveryAvailable }: { deliveryAvailable: boolean }) {
+export function Contact({ deliveryAvailable, captchaSiteKey }: { deliveryAvailable: boolean; captchaSiteKey?: string }) {
   const email = siteConfig.contact.publicEmail;
 
   return (
@@ -43,7 +43,7 @@ export function Contact({ deliveryAvailable }: { deliveryAvailable: boolean }) {
         </div>
 
         <div className="reveal lg:col-span-7 xl:col-span-6 xl:col-start-6">
-          <ContactForm deliveryAvailable={deliveryAvailable} directEmail={email} />
+          <ContactForm deliveryAvailable={deliveryAvailable} directEmail={email} captchaSiteKey={captchaSiteKey} />
         </div>
       </div>
     </section>

@@ -25,6 +25,8 @@ import {
 import { isServiceValue, serviceOptions } from "@/lib/contact/services";
 import { initialContactState, type ContactState } from "@/lib/contact/types";
 
+import { TurnstileWidget } from "./turnstile-widget";
+
 const inputStyles =
   "block w-full border bg-paper px-3.5 text-base text-ink placeholder:text-muted disabled:cursor-not-allowed disabled:bg-surface disabled:text-muted";
 
@@ -75,12 +77,15 @@ interface ContactFormProps {
   deliveryAvailable: boolean;
   /** Public direct-contact address, only when one has been supplied. */
   directEmail?: string;
+  /** Turnstile site key; the form shows a challenge only when one is supplied. */
+  captchaSiteKey?: string;
 }
 
-export function ContactForm({ deliveryAvailable, directEmail }: ContactFormProps) {
+export function ContactForm({ deliveryAvailable, directEmail, captchaSiteKey }: ContactFormProps) {
   const [state, formAction, isPending] = useActionState(submitContact, initialContactState);
 
   const formRef = useRef<HTMLFormElement>(null);
+  const captchaHintId = `${useId()}-captcha-hint`;
   const selectRef = useRef<HTMLSelectElement>(null);
   const elapsedRef = useRef<HTMLInputElement>(null);
   const submissionIdRef = useRef<HTMLInputElement>(null);
@@ -94,6 +99,11 @@ export function ContactForm({ deliveryAvailable, directEmail }: ContactFormProps
     fields: [],
   });
   const [acknowledged, setAcknowledged] = useState<ContactState | null>(null);
+  // Tokens are single-use: one obtained before the latest server response no longer counts.
+  const [captcha, setCaptcha] = useState<{ source: ContactState; token: string | null }>({
+    source: initialContactState,
+    token: null,
+  });
 
   const editedFields = edited.source === state ? edited.fields : [];
   const errors: ContactFieldErrors = { ...state.fieldErrors, ...clientErrors };
@@ -101,6 +111,8 @@ export function ContactForm({ deliveryAvailable, directEmail }: ContactFormProps
 
   const showSuccess = state.status === "success" && acknowledged !== state;
   const disabled = !deliveryAvailable;
+  const captchaRequired = deliveryAvailable && Boolean(captchaSiteKey);
+  const awaitingCaptcha = captchaRequired && !(captcha.source === state && captcha.token);
 
   useEffect(() => {
     mountedAt.current = performance.now();
@@ -154,7 +166,7 @@ export function ContactForm({ deliveryAvailable, directEmail }: ContactFormProps
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
-    if (isPending || disabled) {
+    if (isPending || disabled || awaitingCaptcha) {
       event.preventDefault();
       return;
     }
@@ -334,10 +346,26 @@ export function ContactForm({ deliveryAvailable, directEmail }: ContactFormProps
             <input ref={elapsedRef} type="hidden" name="elapsedMs" defaultValue="0" />
             <input ref={submissionIdRef} type="hidden" name="submissionId" defaultValue="" />
 
+            {captchaRequired && captchaSiteKey ? (
+              <div>
+                <TurnstileWidget
+                  siteKey={captchaSiteKey}
+                  resetSignal={state}
+                  onToken={(token) => setCaptcha({ source: state, token })}
+                />
+                {awaitingCaptcha && !isPending ? (
+                  <p id={captchaHintId} className="mt-1.5 text-xs text-muted">
+                    Complete the verification check to send your message.
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+
             <button
               type="submit"
-              disabled={isPending || disabled}
-              aria-disabled={isPending || disabled}
+              disabled={isPending || disabled || awaitingCaptcha}
+              aria-disabled={isPending || disabled || awaitingCaptcha}
+              aria-describedby={awaitingCaptcha && !isPending ? captchaHintId : undefined}
               className={buttonStyles("primary", "w-full disabled:cursor-not-allowed disabled:border-field disabled:bg-field sm:w-auto")}
             >
               {isPending ? (
