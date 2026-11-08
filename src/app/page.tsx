@@ -4,7 +4,7 @@ import { Hero } from "@/components/sections/hero";
 import { Process } from "@/components/sections/process";
 import { Product } from "@/components/sections/product";
 import { Services } from "@/components/sections/services";
-import { isContactAvailable } from "@/lib/contact/availability";
+import { captchaSiteKey, isContactAvailable } from "@/lib/contact/availability";
 
 // Re-render daily so the footer's copyright year stays current without a manual redeploy.
 export const revalidate = 86400;
@@ -17,7 +17,7 @@ export default function HomePage() {
       <Product />
       <Process />
       <About />
-      <Contact deliveryAvailable={isContactAvailable()} />
+      <Contact deliveryAvailable={isContactAvailable()} captchaSiteKey={captchaSiteKey()} />
     </main>
   );
 }

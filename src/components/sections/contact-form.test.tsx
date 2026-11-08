@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { PRESELECT_EVENT } from "@/lib/contact/preselect";
 import type { ContactState } from "@/lib/contact/types";
@@ -149,5 +149,80 @@ describe("ContactForm", () => {
     await act(async () => {
       finish({ status: "success", message: "Thanks.", fieldErrors: {}, values: {} });
     });
+  });
+});
+
+describe("ContactForm with CAPTCHA", () => {
+  let solve: (token: string) => void;
+  const turnstile = { render: vi.fn(), reset: vi.fn(), remove: vi.fn() };
+
+  beforeEach(() => {
+    turnstile.render.mockReset().mockImplementation((container: HTMLElement, options: { callback: (t: string) => void }) => {
+      // Like the real widget: a hidden token field inside the form, filled when the challenge passes.
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "cf-turnstile-response";
+      container.append(input);
+      solve = (token) => {
+        input.value = token;
+        act(() => options.callback(token));
+      };
+      return "widget-1";
+    });
+    turnstile.reset.mockReset();
+    turnstile.remove.mockReset();
+    window.turnstile = turnstile;
+  });
+
+  afterEach(() => {
+    delete window.turnstile;
+  });
+
+  it("renders no challenge without a site key", () => {
+    render(<ContactForm deliveryAvailable />);
+    expect(turnstile.render).not.toHaveBeenCalled();
+  });
+
+  it("renders no challenge while delivery is unavailable", () => {
+    render(<ContactForm deliveryAvailable={false} captchaSiteKey="site-key" />);
+    expect(turnstile.render).not.toHaveBeenCalled();
+  });
+
+  it("keeps the send button locked, with an explanation, until the challenge passes", async () => {
+    render(<ContactForm deliveryAvailable captchaSiteKey="site-key" />);
+
+    expect(turnstile.render).toHaveBeenCalledWith(expect.any(HTMLElement), expect.objectContaining({ sitekey: "site-key" }));
+    const send = screen.getByRole("button", { name: /send message/i });
+    expect(send).toBeDisabled();
+    expect(send).toHaveAccessibleDescription(/complete the verification check/i);
+
+    solve("token-1");
+    expect(send).toBeEnabled();
+    expect(screen.queryByText(/complete the verification check/i)).not.toBeInTheDocument();
+  });
+
+  it("submits the token, then requires a fresh challenge after a failed attempt", async () => {
+    submitContact.mockResolvedValue({
+      status: "error",
+      message: "We couldn't send your message just now. Please try again in a few minutes.",
+      fieldErrors: {},
+      values: { name: "Alex Rivera", email: "alex@example.com", company: "", service: "web-development", message: "We need a customer portal." },
+    } satisfies ContactState);
+    const user = userEvent.setup();
+    render(<ContactForm deliveryAvailable captchaSiteKey="site-key" />);
+
+    await fillValid(user);
+    solve("token-1");
+    await user.click(screen.getByRole("button", { name: /send message/i }));
+
+    await waitFor(() => expect(submitContact).toHaveBeenCalledTimes(1));
+    expect((submitContact.mock.calls[0]![1] as FormData).get("cf-turnstile-response")).toBe("token-1");
+
+    expect(await screen.findByText(/couldn't send your message/i)).toBeInTheDocument();
+    expect(turnstile.reset).toHaveBeenCalledWith("widget-1");
+    expect(screen.getByRole("button", { name: /send message/i })).toBeDisabled();
+
+    solve("token-2");
+    expect(screen.getByRole("button", { name: /send message/i })).toBeEnabled();
   });
 });

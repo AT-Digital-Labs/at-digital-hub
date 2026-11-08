@@ -1,9 +1,11 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import type { CaptchaConfig } from "./captcha";
 import type { DeliveryConfig } from "./delivery";
 import { processInquiry, type InquiryDeps } from "./inquiry";
 
 const config: DeliveryConfig = { apiKey: "k", from: "inquiries@mail.example.com", to: ["inbox@example.com"] };
+const captchaConfig: CaptchaConfig = { siteKey: "site", secretKey: "secret" };
 
 function form(overrides: Record<string, string> = {}): FormData {
   const data = new FormData();
@@ -22,12 +24,16 @@ function form(overrides: Record<string, string> = {}): FormData {
   return data;
 }
 
-function deps(overrides: Partial<InquiryDeps> = {}): InquiryDeps & { send: ReturnType<typeof vi.fn> } {
+type MockDeps = InquiryDeps & { send: ReturnType<typeof vi.fn>; verify: ReturnType<typeof vi.fn> };
+
+function deps(overrides: Partial<InquiryDeps> = {}): MockDeps {
   return {
     getConfig: () => config,
     send: vi.fn().mockResolvedValue({ ok: true }),
+    getCaptcha: () => undefined,
+    verify: vi.fn().mockResolvedValue({ ok: true }),
     ...overrides,
-  } as InquiryDeps & { send: ReturnType<typeof vi.fn> };
+  } as MockDeps;
 }
 
 afterEach(() => vi.restoreAllMocks());
@@ -80,6 +86,51 @@ describe("processInquiry", () => {
     expect(state.fieldErrors.email).toBeDefined();
     expect(state.fieldErrors.message).toBeDefined();
     expect(d.send).not.toHaveBeenCalled();
+  });
+
+  it("doesn't require a CAPTCHA when none is configured", async () => {
+    const d = deps();
+    const state = await processInquiry(form(), d);
+    expect(state.status).toBe("success");
+    expect(d.verify).not.toHaveBeenCalled();
+  });
+
+  it("verifies the CAPTCHA token before delivering when configured", async () => {
+    const d = deps({ getCaptcha: () => captchaConfig });
+    const state = await processInquiry(form({ "cf-turnstile-response": "token-abc" }), d);
+    expect(state.status).toBe("success");
+    expect(d.verify).toHaveBeenCalledWith(captchaConfig, "token-abc");
+    expect(d.send).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    ["missing", /complete the verification/i],
+    ["rejected", /complete the verification/i],
+    ["unreachable", /couldn't confirm/i],
+  ] as const)("sends nothing when the CAPTCHA is %s, and keeps the visitor's input", async (reason, message) => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const d = deps({ getCaptcha: () => captchaConfig, verify: vi.fn().mockResolvedValue({ ok: false, reason }) });
+    const state = await processInquiry(form({ "cf-turnstile-response": "token-abc" }), d);
+    expect(state.status).toBe("error");
+    expect(state.message).toMatch(message);
+    expect(state.values.name).toBe("Alex Rivera");
+    expect(d.send).not.toHaveBeenCalled();
+  });
+
+  it("doesn't spend a CAPTCHA verification on invalid input", async () => {
+    const d = deps({ getCaptcha: () => captchaConfig });
+    await processInquiry(form({ email: "nope" }), d);
+    expect(d.verify).not.toHaveBeenCalled();
+  });
+
+  it("logs a CAPTCHA failure without the token or personal data", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    const d = deps({ getCaptcha: () => captchaConfig, verify: vi.fn().mockResolvedValue({ ok: false, reason: "rejected" }) });
+    await processInquiry(form({ "cf-turnstile-response": "token-abc" }), d);
+    const logged = JSON.stringify(consoleError.mock.calls);
+    expect(logged).toContain("rejected");
+    expect(logged).not.toContain("token-abc");
+    expect(logged).not.toContain("alex@example.com");
   });
 
   it("surfaces delivery failure as an error, never as success, and logs no personal data", async () => {

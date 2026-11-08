@@ -57,6 +57,8 @@ See [`.env.example`](.env.example). Nothing is committed with real values.
 | `RESEND_API_KEY` | For the form | Server-only. Never prefix with `NEXT_PUBLIC_`. |
 | `CONTACT_FROM_EMAIL` | For the form | Sender on a domain verified with Resend. `address` or `Name <address>`. |
 | `CONTACT_TO_EMAIL` | For the form | Inbox(es) receiving inquiries. Comma-separated, max 5. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No (recommended) | Cloudflare Turnstile site key. The form shows a CAPTCHA **only when both** Turnstile keys are set. |
+| `TURNSTILE_SECRET_KEY` | No (recommended) | Server-only Turnstile secret, used to verify each token. Never prefix with `NEXT_PUBLIC_`. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | No | Shown as a direct contact option **only if set**. |
 | `NEXT_PUBLIC_UNEXORO_URL` | No | Renders an "Explore Unexoro" button **only if set** (https). |
 | `NEXT_PUBLIC_LINKEDIN_URL` / `_FACEBOOK_URL` / `_GITHUB_URL` | No | Footer links and Organization `sameAs`, **only if set**. |
@@ -70,6 +72,7 @@ See [`.env.example`](.env.example). Nothing is committed with real values.
 | --- | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | **Set** to the real domain | Leave unset (falls back to the preview URL) | Unset |
 | `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` | Set | Optional. If set, previews send real email — use a test inbox, or leave unset so the form stays disabled | Unset |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Set | Set if the form is enabled in previews (add the preview host to the widget's hostnames, or use Cloudflare's test keys) | Unset, or Cloudflare's test keys |
 | Optional public details | As available | Same as production if you want to review them | Unset |
 
 ## Contact delivery setup (Resend)
@@ -84,7 +87,10 @@ How it behaves:
 - Server Action validates **every** field on the server (shared schema in `src/lib/contact/schema.ts`), rejects control characters in single-line fields, and treats all input as untrusted. Mail is plain text; the visitor's address is used as `Reply-To` only — never as the sender.
 - All provider-specific code lives in `src/lib/contact/delivery.ts` (`server-only`). Swapping providers means replacing that one file.
 - **Duplicate protection:** the submit button is disabled while pending, and each attempt carries an `Idempotency-Key` so a retried request can't deliver twice.
-- **Bot friction (not rate limiting):** an invisible honeypot field and a minimum fill time (3 s, measured in the browser and checked on the server). These filter naive automated posts only. They are **not** comprehensive abuse protection. If spam appears, add real rate limiting (e.g. Vercel Firewall rate-limit rules or an Upstash/Redis limiter) and/or a CAPTCHA.
+- **Bot friction:** an invisible honeypot field and a minimum fill time (3 s, measured in the browser and checked on the server) filter naive automated posts.
+- **CAPTCHA (optional, recommended):** when both Turnstile keys are set, the form shows a Cloudflare Turnstile challenge and the send button stays disabled until it passes. The server verifies the token (provider code lives in `src/lib/contact/captcha.ts`) only after the input is valid, and fails closed: if Cloudflare can't be reached, nothing is sent and the visitor is asked to retry. Tokens are single-use, so the challenge resets after every attempt. Without the keys the form works with the honeypot and fill time only.
+  - Setup: Cloudflare dashboard → Turnstile → **Add widget**, add your production domain (and any preview host) as hostnames, Managed mode. Copy the site key and secret into the two variables above and redeploy.
+- **Rate limiting is not in code.** Add a Vercel Firewall rate-limit rule (Project → Firewall → Rules): match `POST` requests to `/`, e.g. 5 requests per 10 minutes per IP, action *Deny* (or *Challenge*). Server Action submissions are `POST`s to the page path, so this doesn't affect normal browsing.
 - Failures are logged as `{ reason, status }` only — never names, email addresses or message text. A failed delivery shows an error (and the direct email if one is configured); success is shown only after the provider accepts the message.
 - Without JavaScript the form cannot be completed (the timing field needs a script); the rest of the page, including navigation, works.
 
@@ -124,6 +130,7 @@ Custom domains attached to a *Preview* environment inherit this too. Optionally 
 | Real Unexoro screenshots | All product visuals are **illustrative HTML/CSS with sample data**, labelled "Illustrative concept · Sample data." Swap in real, approved screenshots (use `next/image` with set dimensions) and drop the label when they are real. |
 | Production domain | Required as `NEXT_PUBLIC_SITE_URL`. |
 | Email delivery details | Verified sending domain, Resend API key, destination inbox. |
+| Spam protection | Cloudflare Turnstile site key and secret; a Vercel Firewall rate-limit rule. |
 | Public contact details | Optional: public email, social profiles, privacy policy and terms. A privacy policy is advisable because the form collects personal data. |
 | Unexoro product URL | Optional; no "Explore Unexoro" button is shown until it exists. |
 | Confirmed module status | Optional: set each module's `availability` in `content.ts` when verified. |
